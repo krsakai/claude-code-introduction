@@ -9,7 +9,7 @@
     "start": "NODE_OPTIONS='--require ./node-compat.cjs' next start",
     "lint": "next lint",
     "test": "vitest",
-    "setup": "npm install && npx prisma generate && npx prisma migrate dev",
+    "setup": "npm install && npx prisma generate && npx prisma migrate dev && node scripts/init-claude.js",
     "db:reset": "npx prisma migrate reset --force"
   },
   "dependencies": {
@@ -41,6 +41,7 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.85",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",

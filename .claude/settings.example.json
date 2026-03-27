@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_wait_for",
+      "Edit(~/.claude/skills/setup-github-actions/**)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Read(/Users/kuniyasakai/.claude/**)",
+      "Read($PWD/**)",
+      "Write($PWD/**)",
+      "Edit($PWD/**)",
+      "Bash"
+    ],
+    "additionalDirectories": [
+      "$PWD/.claude"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | grep -q 'prisma/schema.prisma' && echo '{\"decision\":\"block\",\"reason\":\"このファイルは保護されています。スキーマ変更は手動で行ってください。\"}' || true"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node $PWD/.claude/hooks/read_hook.js"
+          }
+        ]
+      }
+    ]
+  }
+}

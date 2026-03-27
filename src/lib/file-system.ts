@@ -6,6 +6,7 @@ export interface FileNode {
   children?: Map<string, FileNode>;
 }
 
+// 仮想ファイルシステムの実装クラス
 export class VirtualFileSystem {
   private files: Map<string, FileNode> = new Map();
   private root: FileNode;
